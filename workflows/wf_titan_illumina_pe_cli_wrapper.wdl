@@ -22,8 +22,7 @@ workflow cli_wrapper {
         seq_method = "Illumina paired-end",
         read1_raw = sample.read1_raw,
         read2_raw = sample.read2_raw,
-        primer_bed = sample.primer_bed,
-        pangolin_docker_image = "staphb/pangolin:2.3.2-pangolearn-2021-02-21"
+        primer_bed = sample.primer_bed
     }
 
     call summary.sample_metrics {
@@ -35,8 +34,6 @@ workflow cli_wrapper {
         nextclade_aa_subs = titan_illumina_pe.nextclade_aa_subs,
         nextclade_aa_dels = titan_illumina_pe.nextclade_aa_dels,
         fastqc_raw_pairs  = titan_illumina_pe.fastqc_raw_pairs,
-        seqy_pairs        = titan_illumina_pe.seqy_pairs,
-        seqy_percent      = titan_illumina_pe.seqy_percent,
         kraken_human      = titan_illumina_pe.kraken_human,
         kraken_sc2        = titan_illumina_pe.kraken_sc2,
         number_N          = titan_illumina_pe.number_N,
