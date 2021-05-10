@@ -5,8 +5,9 @@ task primer_trim {
   input {
     File        bamfile
     String      samplename
-    File     primer_bed
+    File        primer_bed
     Boolean?    keep_noprimer_reads=true
+    String      docker="staphb/ivar:1.3.1"
   }
 
   command {
@@ -32,15 +33,15 @@ task primer_trim {
 
   output {
     File      trimmed_bam = "${samplename}.primertrim.bam"
-    File 	  trim_sorted_bam = "${samplename}.primertrim.sorted.bam"
-    File 	  trim_sorted_bai = "${samplename}.primertrim.sorted.bam.bai"
+    File      trim_sorted_bam = "${samplename}.primertrim.sorted.bam"
+    File      trim_sorted_bai = "${samplename}.primertrim.sorted.bam.bai"
     String    ivar_version = read_string("IVAR_VERSION")
-    String 	  samtools_version = read_string("SAMTOOLS_VERSION")
+    String    samtools_version = read_string("SAMTOOLS_VERSION")
     String    pipeline_date = read_string("DATE")
   }
 
   runtime {
-    docker:       "staphb/ivar:1.3.1"
+    docker:       "~{docker}"
     memory:       "8 GB"
     cpu:          2
     disks:        "local-disk 100 SSD"
@@ -53,8 +54,8 @@ task variant_call {
   input {
     File        bamfile
     String      samplename
-    String? 	ref_genome = "/artic-ncov2019/primer_schemes/nCoV-2019/V3/nCoV-2019.reference.fasta"
-    String? 	ref_gff = "/reference/GCF_009858895.2_ASM985889v3_genomic.gff"
+    String?     ref_genome = "/artic-ncov2019/primer_schemes/nCoV-2019/V3/nCoV-2019.reference.fasta"
+    String?     ref_gff = "/reference/GCF_009858895.2_ASM985889v3_genomic.gff"
     Boolean?    count_orphans = true
     Int?        max_depth = "600000"
     Boolean?    disable_baq = true
@@ -62,6 +63,7 @@ task variant_call {
     Int?        min_qual = "20"
     Float?      min_freq = "0.6"
     Int?        min_depth = "10"
+    String      docker="staphb/ivar:1.2.2_artic20200528"
   }
 
   command {
@@ -92,15 +94,15 @@ task variant_call {
 	}
 
   output {
- 	Int       variant_num = read_string("VARIANT_NUM")
- 	File  	  sample_variants = "${samplename}.variants.tsv"
+    Int       variant_num = read_string("VARIANT_NUM")
+    File      sample_variants = "${samplename}.variants.tsv"
     String    ivar_version = read_string("IVAR_VERSION")
     String    samtools_version = read_string("SAMTOOLS_VERSION")
     String    pipeline_date = read_string("DATE")
   }
 
   runtime {
-    docker:       "staphb/ivar:1.2.2_artic20200528"
+    docker:       "~{docker}"
     memory:       "8 GB"
     cpu:          2
     disks:        "local-disk 100 SSD"
@@ -123,6 +125,7 @@ task consensus {
     Float?      min_freq = "0.6"
     Int?        min_depth = "10"
     String?     char_unknown = "N"
+    String      docker="staphb/ivar:1.2.2_artic20200528"
   }
 
   command {
@@ -179,7 +182,7 @@ task consensus {
   }
 
   runtime {
-    docker:       "staphb/ivar:1.2.2_artic20200528"
+    docker:       "~{docker}"
     memory:       "8 GB"
     cpu:          2
     disks:        "local-disk 100 SSD"

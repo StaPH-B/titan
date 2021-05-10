@@ -120,6 +120,7 @@ task seqyclean {
     Boolean?    seqyclean_dup = false
     Boolean?    seqyclean_no_adapter_trim = false
     Int?        cpus = 16
+    String      docker="staphb/seqyclean:1.10.09"
   }
 
   command {
@@ -154,7 +155,7 @@ task seqyclean {
   }
 
   runtime {
-      docker:       "staphb/seqyclean:1.10.09"
+      docker:       "~{docker}"
       memory:       "8 GB"
       cpu:          2
       disks:        "local-disk 100 SSD"
@@ -171,7 +172,7 @@ task trimmomatic {
     Int?        trimmomatic_minlen = 15
     Int?        trimmomatic_window_size=4
     Int?        trimmomatic_quality_trim_score=30
-    Int?    threads = 4
+    Int?        threads = 4
   }
 
   command <<<

@@ -24,7 +24,6 @@ task download_fasta {
     String         out_prefix
     Array[String]+ accessions
     String         emailAddress
-
     String         docker="quay.io/broadinstitute/viral-phylo:2.1.19.1"
   }
 
@@ -55,7 +54,6 @@ task download_annotations {
     Array[String]+ accessions
     String         emailAddress
     String         combined_out_prefix
-
     String         docker="quay.io/broadinstitute/viral-phylo:2.1.19.1"
   }
 
@@ -99,7 +97,6 @@ task annot_transfer {
     File         multi_aln_fasta
     File         reference_fasta
     Array[File]+ reference_feature_table
-
     String  docker="quay.io/broadinstitute/viral-phylo:2.1.19.1"
   }
 
@@ -152,7 +149,6 @@ task align_and_annot_transfer_single {
     File         genome_fasta
     Array[File]+ reference_fastas
     Array[File]+ reference_feature_tables
-
     String  docker="quay.io/broadinstitute/viral-phylo:2.1.19.1"
   }
 
@@ -202,9 +198,7 @@ task align_and_annot_transfer_single {
 task structured_comments {
   input {
     File    assembly_stats_tsv
-
     File?   filter_to_ids
-
     String  docker="quay.io/broadinstitute/viral-core:2.1.19"
   }
   String out_base = basename(assembly_stats_tsv, '.txt')
@@ -280,9 +274,7 @@ task rename_fasta_header {
   input {
     File    genome_fasta
     String  new_name
-
     String  out_basename = basename(genome_fasta, ".fasta")
-
     String  docker="quay.io/broadinstitute/viral-core:2.1.19"
   }
   command {
@@ -389,7 +381,6 @@ task lookup_table_by_filename {
     String  id
     File    mapping_tsv
     Int     return_col=2
-
     String  docker="ubuntu"
   }
   command {
@@ -791,7 +782,6 @@ task vadr {
     File   genome_fasta
     String samplename
     String vadr_opts="--noseqnamemax -s -r --nomisc --mkey NC_045512 --lowsim5term 2 --lowsim3term 2 --fstlowthr 0.0 --alt_fail lowscore,fsthicnf,fstlocnf"
-
     String  docker="staphb/vadr:1.1.2"
   }
   String out_base = basename(genome_fasta, '.fasta')

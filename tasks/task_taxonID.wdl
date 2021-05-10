@@ -7,6 +7,7 @@ task kraken2 {
 	  String      samplename
 	  String?     kraken2_db = "/kraken2-db"
     Int?        cpus=4
+    String      docker="staphb/kraken2:2.0.8-beta_hv"
   }
 
   command{
@@ -44,7 +45,7 @@ task kraken2 {
   }
 
   runtime {
-    docker:       "staphb/kraken2:2.0.8-beta_hv"
+    docker:       "~{docker}"
     memory:       "8 GB"
     cpu:          4
     disks:        "local-disk 100 SSD"
@@ -56,7 +57,7 @@ task pangolin {
   input {
     File        fasta
     String      samplename
-
+    String      docker="staphb/pangolin:1.1.14"
   }
 
   command{
@@ -86,9 +87,9 @@ task pangolin {
   }
 
   runtime {
-    docker:       "staphb/pangolin:1.1.14"
+    docker:       "~{docker}"
     memory:       "8 GB"
-    cpu:          40
+    cpu:          4
     disks:        "local-disk 100 SSD"
     preemptible:  0
   }
@@ -98,9 +99,7 @@ task pangolin2 {
   input {
     File        fasta
     String      samplename
-    String      docker
-
-
+    String      docker="staphb/pangolin:2.3.2-pangolearn-2021-02-21"
   }
 
   command{
@@ -134,7 +133,7 @@ task pangolin2 {
   runtime {
     docker:     "~{docker}"
     memory:       "8 GB"
-    cpu:          40
+    cpu:          4
     disks:        "local-disk 100 SSD"
     preemptible:  0
   }
@@ -151,6 +150,7 @@ task nextclade_one_sample {
         File?  qc_config_json
         File?  gene_annotations_json
         File?  pcr_primers_csv
+        String docker="neherlab/nextclade:latest"
     }
     String basename = basename(genome_fasta, ".fasta")
     command {
@@ -179,7 +179,7 @@ task nextclade_one_sample {
         grep ^aaDeletions transposed.tsv | cut -f 2 | grep -v aaDeletions | sed 's/,/|/g' > NEXTCLADE_AADELS
     }
     runtime {
-        docker: "neherlab/nextclade:latest"
+        docker: "~{docker}"
         memory: "3 GB"
         cpu:    2
         disks: "local-disk 50 HDD"

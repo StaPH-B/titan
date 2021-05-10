@@ -29,8 +29,9 @@ workflow cli_wrapper {
       input:
         samplename        = sample.samplename,
         pangolin_lineage  = titan_illumina_pe.pangolin_lineage,
-        pangolin_aLRT     = titan_illumina_pe.pangolin_aLRT,
+        pangolin_version  = titan_illumina_pe.pangolin_version,
         nextclade_clade   = titan_illumina_pe.nextclade_clade,
+        nextclade_version = titan_illumina_pe.nextclade_version,
         nextclade_aa_subs = titan_illumina_pe.nextclade_aa_subs,
         nextclade_aa_dels = titan_illumina_pe.nextclade_aa_dels,
         fastqc_raw_pairs  = titan_illumina_pe.fastqc_raw_pairs,

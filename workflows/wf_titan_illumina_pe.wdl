@@ -20,8 +20,6 @@ workflow titan_illumina_pe {
     File    read1_raw
     File    read2_raw
     File    primer_bed
-    String  pangolin_docker_image = "staphb/pangolin:2.3.2-pangolearn-2021-02-21"
-
   }
 
   call read_qc.read_QC_trim {
@@ -65,8 +63,7 @@ workflow titan_illumina_pe {
   call taxon_ID.pangolin2 {
     input:
       samplename = samplename,
-      fasta = consensus.consensus_seq,
-      docker = pangolin_docker_image
+      fasta = consensus.consensus_seq
   }
   call taxon_ID.nextclade_one_sample {
     input:
@@ -108,7 +105,7 @@ workflow titan_illumina_pe {
     File    sorted_bai         = bwa.sorted_bai
     String  bwa_version        = bwa.bwa_version
     String  sam_version        = bwa.sam_version
-    String assembly_method     = "~{bwa.bwa_version}; ~{primer_trim.ivar_version}"
+    String  assembly_method     = "~{bwa.bwa_version}; ~{primer_trim.ivar_version}"
 
     File    trim_sorted_bam            = primer_trim.trim_sorted_bam
     File    trim_sorted_bai            = primer_trim.trim_sorted_bai
@@ -139,7 +136,7 @@ workflow titan_illumina_pe {
     Float   pangolin_aLRT          = pangolin2.pangolin_aLRT
     File    pango_lineage_report   = pangolin2.pango_lineage_report
     String  pangolin_version       = pangolin2.version
-    String  pangolin_docker       = pangolin2.pangolin_docker
+    String  pangolin_docker        = pangolin2.pangolin_docker
 
 
     File    nextclade_json         = nextclade_one_sample.nextclade_json
