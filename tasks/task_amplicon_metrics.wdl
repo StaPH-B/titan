@@ -8,6 +8,7 @@ task bedtools_cov {
     String?    primer_bed = "/artic-ncov2019/primer_schemes/nCoV-2019/V3/nCoV-2019_amplicon.bed"
     String?    fail_threshold = 20
     String     docker="staphb/ivar:1.2.2_artic20200528"
+    Int?       cpus = 1
   }
 
   command <<<
@@ -31,7 +32,7 @@ task bedtools_cov {
   runtime {
     docker:       "~{docker}"
     memory:       "2 GB"
-    cpu:          1
+    cpu:          cpus
     disks:        "local-disk 100 SSD"
     preemptible:  0
   }
@@ -46,6 +47,7 @@ task bedtools_multicov {
     Array[File]  primtrim_baifiles
     String?      primer_bed = "/artic-ncov2019/primer_schemes/nCoV-2019/V3/nCoV-2019_amplicon.bed"
     String       docker = "staphb/ivar:1.2.2_artic20200528"
+    Int?         cpus = 1
   }
 
   command{
@@ -70,7 +72,7 @@ task bedtools_multicov {
   runtime {
     docker:       "~{docker}"
     memory:       "2 GB"
-    cpu:          1
+    cpu:          cpus
     disks:        "local-disk 100 SSD"
     preemptible:  0
   }

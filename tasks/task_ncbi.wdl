@@ -779,10 +779,11 @@ task vadr {
     description: "Runs NCBI's Viral Annotation DefineR for annotation and QC. See https://github.com/ncbi/vadr/wiki/Coronavirus-annotation"
   }
   input {
-    File   genome_fasta
-    String samplename
-    String vadr_opts="--noseqnamemax -s -r --nomisc --mkey NC_045512 --lowsim5term 2 --lowsim3term 2 --fstlowthr 0.0 --alt_fail lowscore,fsthicnf,fstlocnf"
-    String  docker="staphb/vadr:1.1.2"
+    File      genome_fasta
+    String    samplename
+    String    vadr_opts="--noseqnamemax -s -r --nomisc --mkey NC_045512 --lowsim5term 2 --lowsim3term 2 --fstlowthr 0.0 --alt_fail lowscore,fsthicnf,fstlocnf"
+    String    docker="staphb/vadr:1.1.2"
+    Int?      cpus = 8
   }
   String out_base = basename(genome_fasta, '.fasta')
   command <<<
@@ -824,7 +825,7 @@ task vadr {
   runtime {
     docker: "~{docker}"
     memory: "64 GB"
-    cpu: 8
+    cpu: cpus
     dx_instance_type: "mem3_ssd1_v2_x8"
   }
 }

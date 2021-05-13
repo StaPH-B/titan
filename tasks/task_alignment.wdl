@@ -38,7 +38,7 @@ task bwa {
   runtime {
     docker:       "~{docker}"
     memory:       "8 GB"
-    cpu:          "~{cpus}"
+    cpu:          cpus
     disks:        "local-disk 100 SSD"
     preemptible:  0
   }
@@ -48,7 +48,7 @@ task mafft {
 
   input {
     Array[File]   genomes
-    String?       cpus = 16
+    Int?          cpus = 16
     String        docker="staphb/mafft:7.450"
   }
 
@@ -71,7 +71,7 @@ task mafft {
   runtime {
     docker:       "~{docker}"
     memory:       "32 GB"
-    cpu:          "~{cpus}"
+    cpu:          cpus
     disks:        "local-disk 100 SSD"
     preemptible:  0
   }

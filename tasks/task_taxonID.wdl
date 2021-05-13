@@ -47,7 +47,7 @@ task kraken2 {
   runtime {
     docker:       "~{docker}"
     memory:       "8 GB"
-    cpu:          4
+    cpu:          cpus
     disks:        "local-disk 100 SSD"
     preemptible:  0
   }
@@ -58,6 +58,7 @@ task pangolin {
     File        fasta
     String      samplename
     String      docker="staphb/pangolin:1.1.14"
+    Int?        cpus = 4
   }
 
   command{
@@ -89,7 +90,7 @@ task pangolin {
   runtime {
     docker:       "~{docker}"
     memory:       "8 GB"
-    cpu:          4
+    cpu:          cpus
     disks:        "local-disk 100 SSD"
     preemptible:  0
   }
@@ -100,6 +101,7 @@ task pangolin2 {
     File        fasta
     String      samplename
     String      docker="staphb/pangolin:2.3.2-pangolearn-2021-02-21"
+    Int?        cpus = 4
   }
 
   command{
@@ -133,7 +135,7 @@ task pangolin2 {
   runtime {
     docker:     "~{docker}"
     memory:       "8 GB"
-    cpu:          4
+    cpu:          cpus
     disks:        "local-disk 100 SSD"
     preemptible:  0
   }
@@ -151,6 +153,7 @@ task nextclade_one_sample {
         File?  gene_annotations_json
         File?  pcr_primers_csv
         String docker="neherlab/nextclade:latest"
+        Int?   cpus = 2
     }
     String basename = basename(genome_fasta, ".fasta")
     command {
@@ -181,7 +184,7 @@ task nextclade_one_sample {
     runtime {
         docker: "~{docker}"
         memory: "3 GB"
-        cpu:    2
+        cpu:    cpus
         disks: "local-disk 50 HDD"
         dx_instance_type: "mem1_ssd1_v2_x2"
     }

@@ -6,6 +6,7 @@ task ncbi_scrub_pe {
     File        read2
     String      samplename
     String      docker = "ncbi/sra-human-scrubber:1.0.2021-04-19"
+    Int?        cpus = 2
 
   }
   String r1_filename = basename(read1)
@@ -58,7 +59,7 @@ task ncbi_scrub_pe {
   runtime {
       docker:       "~{docker}"
       memory:       "8 GB"
-      cpu:          2
+      cpu:          cpus
       disks:        "local-disk 100 SSD"
       preemptible:  0
   }
@@ -69,6 +70,7 @@ task ncbi_scrub_se {
     File        read1
     String      samplename
     String      docker = "ncbi/sra-human-scrubber:1.0.2021-04-19"
+    Int?        cpus = 2
 
   }
   String r1_filename = basename(read1)
@@ -102,7 +104,7 @@ task ncbi_scrub_se {
   runtime {
       docker:       "~{docker}"
       memory:       "8 GB"
-      cpu:          2
+      cpu:          cpus
       disks:        "local-disk 100 SSD"
       preemptible:  0
   }
@@ -157,7 +159,7 @@ task seqyclean {
   runtime {
       docker:       "~{docker}"
       memory:       "8 GB"
-      cpu:          2
+      cpu:          cpus
       disks:        "local-disk 100 SSD"
       preemptible:  0
   }
@@ -172,7 +174,7 @@ task trimmomatic {
     Int?        trimmomatic_minlen = 15
     Int?        trimmomatic_window_size=4
     Int?        trimmomatic_quality_trim_score=30
-    Int?        threads = 4
+    Int?        cpus = 4
   }
 
   command <<<
@@ -181,7 +183,7 @@ task trimmomatic {
     trimmomatic -version > VERSION && sed -i -e 's/^/Trimmomatic /' VERSION
 
     trimmomatic PE \
-    -threads ~{threads} \
+    -threads ~{cpus} \
     ~{read1} ~{read2} \
     -baseout ~{samplename}.fastq.gz \
     SLIDINGWINDOW:~{trimmomatic_window_size}:~{trimmomatic_quality_trim_score} \
@@ -200,7 +202,7 @@ task trimmomatic {
   runtime {
       docker:     "~{docker}"
       memory:       "8 GB"
-      cpu:          4
+      cpu:          cpus
       disks:        "local-disk 100 SSD"
       preemptible:  0
   }
@@ -213,7 +215,7 @@ task trimmomatic_se {
     Int?        trimmomatic_minlen = 25
     Int?        trimmomatic_window_size=4
     Int?        trimmomatic_quality_trim_score=30
-    Int?    threads = 4
+    Int?        cpus = 4
   }
 
   command <<<
@@ -222,7 +224,7 @@ task trimmomatic_se {
     trimmomatic -version > VERSION && sed -i -e 's/^/Trimmomatic /' VERSION
 
     trimmomatic SE \
-    -threads ~{threads} \
+    -threads ~{cpus} \
     ~{read1} \
     ~{samplename}_trimmed.fastq.gz \
     SLIDINGWINDOW:~{trimmomatic_window_size}:~{trimmomatic_quality_trim_score} \
@@ -240,7 +242,7 @@ task trimmomatic_se {
   runtime {
       docker:     "~{docker}"
       memory:       "8 GB"
-      cpu:          4
+      cpu:          cpus
       disks:        "local-disk 100 SSD"
       preemptible:  0
   }
@@ -251,6 +253,7 @@ task bbduk {
     File        read2_trimmed
     String      samplename
     String      docker="staphb/bbtools:38.76"
+    Int?        cpus = 4
   }
 
   command <<<
@@ -277,7 +280,7 @@ task bbduk {
   runtime {
       docker:     "~{docker}"
       memory:       "8 GB"
-      cpu:          4
+      cpu:          cpus
       disks:        "local-disk 100 SSD"
       preemptible:  0
   }
@@ -287,6 +290,7 @@ task bbduk_se {
     File        read1_trimmed
     String      samplename
     String      docker="staphb/bbtools:38.76"
+    Int?        cpus = 4
   }
 
   command <<<
@@ -310,7 +314,7 @@ task bbduk_se {
   runtime {
       docker:     "~{docker}"
       memory:       "8 GB"
-      cpu:          4
+      cpu:          cpus
       disks:        "local-disk 100 SSD"
       preemptible:  0
   }

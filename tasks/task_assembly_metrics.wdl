@@ -6,6 +6,7 @@ task stats_n_coverage {
     File        bamfile
     String      samplename
     String      docker="staphb/samtools:1.10"
+    Int?        cpus = 2
   }
 
   command{
@@ -50,7 +51,7 @@ task stats_n_coverage {
   runtime {
     docker:       "~{docker}"
     memory:       "8 GB"
-    cpu:          2
+    cpu:          cpus
     disks:        "local-disk 100 SSD"
     preemptible:  0
   }

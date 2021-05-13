@@ -47,7 +47,7 @@ task fastqc {
   runtime {
     docker:       "~{docker}"
     memory:       "4 GB"
-    cpu:          2
+    cpu:          cpus
     disks:        "local-disk 100 SSD"
     preemptible:  0
   }
