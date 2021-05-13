@@ -6,7 +6,7 @@ import "../tasks/task_consensus_call.wdl" as consensus_call
 import "../tasks/task_assembly_metrics.wdl" as assembly_metrics
 import "../tasks/task_taxonID.wdl" as taxon_ID
 import "../tasks/task_amplicon_metrics.wdl" as amplicon_metrics
-import "../tasks/task_ncbi.wdl" as ncbi
+import "../tasks/task_ncbi_vadr.wdl" as ncbi
 
 
 workflow titan_illumina_pe {
