@@ -7,6 +7,7 @@ task stats_n_coverage {
     String      samplename
     String      docker="staphb/samtools:1.10"
     Int?        cpus = 2
+    String?     memory = "8 GB"
   }
 
   command{
@@ -50,7 +51,7 @@ task stats_n_coverage {
 
   runtime {
     docker:       "~{docker}"
-    memory:       "8 GB"
+    memory:       "~{memory}"
     cpu:          cpus
     disks:        "local-disk 100 SSD"
     preemptible:  0

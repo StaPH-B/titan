@@ -9,6 +9,7 @@ task primer_trim {
     Boolean?    keep_noprimer_reads=true
     String      docker="staphb/ivar:1.3.1"
     Int?        cpus = 2
+    String?     memory = "8 GB"
   }
 
   command {
@@ -43,7 +44,7 @@ task primer_trim {
 
   runtime {
     docker:       "~{docker}"
-    memory:       "8 GB"
+    memory:       "~{memory}"
     cpu:          cpus
     disks:        "local-disk 100 SSD"
     preemptible:  0
@@ -66,6 +67,7 @@ task variant_call {
     Int?        min_depth = "10"
     String      docker="staphb/ivar:1.2.2_artic20200528"
     Int?        cpus = 2
+    String?     memory = "8 GB"
   }
 
   command {
@@ -105,7 +107,7 @@ task variant_call {
 
   runtime {
     docker:       "~{docker}"
-    memory:       "8 GB"
+    memory:       "~{memory}"
     cpu:          cpus
     disks:        "local-disk 100 SSD"
     preemptible:  0
@@ -129,6 +131,7 @@ task consensus {
     String?     char_unknown = "N"
     String      docker="staphb/ivar:1.2.2_artic20200528"
     Int?        cpus = 2
+    String?     memory = "8 GB"
   }
 
   command {
@@ -186,7 +189,7 @@ task consensus {
 
   runtime {
     docker:       "~{docker}"
-    memory:       "8 GB"
+    memory:       "~{memory}"
     cpu:          cpus
     disks:        "local-disk 100 SSD"
     preemptible:  0

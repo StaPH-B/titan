@@ -28,6 +28,8 @@ task sample_metrics {
     Float?    meanbaseq_threshold = 30.00
     Float?    meanmapq_threshold = 30.00
     String    docker = "staphb/multiqc:1.7"
+    Int?      cpus = 1
+    String?   memory = "1 GB"
   }
 
   command <<<
@@ -78,8 +80,8 @@ task sample_metrics {
 
   runtime {
       docker:       "~{docker}"
-      memory:       "1 GB"
-      cpu:          1
+      memory:       "~{memory}"
+      cpu:          cpus
       disks:        "local-disk 100 SSD"
       preemptible:  0
   }
@@ -90,7 +92,9 @@ task merge_metrics {
 
   input {
     Array[String]   all_metrics
-    String      docker="staphb/trimmomatic:0.39"
+    String          docker="staphb/trimmomatic:0.39"
+    Int?            cpus = 1
+    String?         memory = "1 GB"
   }
 
   command {
@@ -127,8 +131,8 @@ task merge_metrics {
 
   runtime {
       docker:       "~{docker}"
-      memory:       "1 GB"
-      cpu:          1
+      memory:       "~{memory}"
+      cpu:          cpus
       disks:        "local-disk 100 SSD"
       preemptible:  0
   }

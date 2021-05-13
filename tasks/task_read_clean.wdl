@@ -7,6 +7,7 @@ task ncbi_scrub_pe {
     String      samplename
     String      docker = "ncbi/sra-human-scrubber:1.0.2021-04-19"
     Int?        cpus = 2
+    String?     memory = "8 GB"
 
   }
   String r1_filename = basename(read1)
@@ -58,7 +59,7 @@ task ncbi_scrub_pe {
 
   runtime {
       docker:       "~{docker}"
-      memory:       "8 GB"
+      memory:       "~{memory}"
       cpu:          cpus
       disks:        "local-disk 100 SSD"
       preemptible:  0
@@ -71,6 +72,7 @@ task ncbi_scrub_se {
     String      samplename
     String      docker = "ncbi/sra-human-scrubber:1.0.2021-04-19"
     Int?        cpus = 2
+    String?     memory = "8 GB"
 
   }
   String r1_filename = basename(read1)
@@ -103,7 +105,7 @@ task ncbi_scrub_se {
 
   runtime {
       docker:       "~{docker}"
-      memory:       "8 GB"
+      memory:       "~{memory}"
       cpu:          cpus
       disks:        "local-disk 100 SSD"
       preemptible:  0
@@ -120,6 +122,7 @@ task trimmomatic {
     Int?        trimmomatic_window_size=4
     Int?        trimmomatic_quality_trim_score=30
     Int?        cpus = 4
+    String?     memory = "8 GB"
   }
 
   command <<<
@@ -145,8 +148,8 @@ task trimmomatic {
   }
 
   runtime {
-      docker:     "~{docker}"
-      memory:       "8 GB"
+      docker:       "~{docker}"
+      memory:       "~{memory}"
       cpu:          cpus
       disks:        "local-disk 100 SSD"
       preemptible:  0
@@ -162,6 +165,7 @@ task trimmomatic_se {
     Int?        trimmomatic_window_size=4
     Int?        trimmomatic_quality_trim_score=30
     Int?        cpus = 4
+    String?     memory = "8 GB"
   }
 
   command <<<
@@ -186,8 +190,8 @@ task trimmomatic_se {
   }
 
   runtime {
-      docker:     "~{docker}"
-      memory:       "8 GB"
+      docker:       "~{docker}"
+      memory:       "~{memory}"
       cpu:          cpus
       disks:        "local-disk 100 SSD"
       preemptible:  0
@@ -200,6 +204,7 @@ task bbduk {
     String      samplename
     String      docker="staphb/bbtools:38.76"
     Int?        cpus = 4
+    String?     memory = "8 GB"
   }
 
   command <<<
@@ -224,8 +229,8 @@ task bbduk {
   }
 
   runtime {
-      docker:     "~{docker}"
-      memory:       "8 GB"
+      docker:       "~{docker}"
+      memory:       "~{memory}"
       cpu:          cpus
       disks:        "local-disk 100 SSD"
       preemptible:  0
@@ -237,6 +242,7 @@ task bbduk_se {
     String      samplename
     String      docker="staphb/bbtools:38.76"
     Int?        cpus = 4
+    String?     memory = "8 GB"
   }
 
   command <<<
@@ -258,8 +264,8 @@ task bbduk_se {
   }
 
   runtime {
-      docker:     "~{docker}"
-      memory:       "8 GB"
+      docker:       "~{docker}"
+      memory:       "~{memory}"
       cpu:          cpus
       disks:        "local-disk 100 SSD"
       preemptible:  0

@@ -10,6 +10,7 @@ task vadr {
     String    vadr_opts="--noseqnamemax -s -r --nomisc --mkey NC_045512 --lowsim5term 2 --lowsim3term 2 --fstlowthr 0.0 --alt_fail lowscore,fsthicnf,fstlocnf"
     String    docker="staphb/vadr:1.1.2"
     Int?      cpus = 8
+    String?   memory = "64 GB"
   }
   String out_base = basename(genome_fasta, '.fasta')
   command <<<
@@ -49,9 +50,9 @@ task vadr {
     Boolean vadr_result = read_boolean("vadr.result")
   }
   runtime {
-    docker: "~{docker}"
-    memory: "64 GB"
-    cpu: cpus
+    docker:           "~{docker}"
+    memory:           "~{memory}"
+    cpu:              cpus
     dx_instance_type: "mem3_ssd1_v2_x8"
   }
 }

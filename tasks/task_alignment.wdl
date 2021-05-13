@@ -7,7 +7,8 @@ task bwa {
     File        read2
     String      samplename
     String?     reference_genome="/artic-ncov2019/primer_schemes/nCoV-2019/V3/nCoV-2019.reference.fasta"
-    Int?        cpus=2
+    Int?        cpus = 2
+    String?     memory = "8 GB"
     String      docker="staphb/ivar:1.2.2_artic20200528"
   }
 
@@ -37,7 +38,7 @@ task bwa {
 
   runtime {
     docker:       "~{docker}"
-    memory:       "8 GB"
+    memory:       "~{memory}"
     cpu:          cpus
     disks:        "local-disk 100 SSD"
     preemptible:  0
@@ -49,6 +50,7 @@ task mafft {
   input {
     Array[File]   genomes
     Int?          cpus = 16
+    String?       memory = "32 GB"
     String        docker="staphb/mafft:7.450"
   }
 
@@ -70,7 +72,7 @@ task mafft {
 
   runtime {
     docker:       "~{docker}"
-    memory:       "32 GB"
+    memory:       "~{memory}"
     cpu:          cpus
     disks:        "local-disk 100 SSD"
     preemptible:  0

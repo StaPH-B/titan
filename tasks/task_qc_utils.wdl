@@ -9,6 +9,7 @@ task fastqc {
     String      read2_name = basename(basename(basename(read2, ".gz"), ".fastq"), ".fq")
     Int?        cpus = 2
     String      docker = "staphb/fastqc:0.11.8"
+    String?     memory = "4 GB"
   }
 
   command {
@@ -46,7 +47,7 @@ task fastqc {
 
   runtime {
     docker:       "~{docker}"
-    memory:       "4 GB"
+    memory:       "~{memory}"
     cpu:          cpus
     disks:        "local-disk 100 SSD"
     preemptible:  0
