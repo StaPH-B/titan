@@ -1,4 +1,4 @@
-# StaPH-B Public Health Viral Genomics
+# StaPH-B Titan (Public Health Viral Genomics)
 
 ## Workflows designed for SARS-CoV-2 genomic analysis
 This repository is a collection of workflows hosted by the StaPH-B community to provide a centralized location for SARS-CoV-2 workflow development.
