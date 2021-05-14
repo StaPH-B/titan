@@ -1,0 +1,48 @@
+version: 1.2
+workflows:
+ - name: Titan_ClearLabs
+   subclass: WDL
+   primaryDescriptorPath: /workflows/wf_titan_clearlabs.wdl
+   testParameterFiles:
+    - empty.json
+ - name: Titan_ONT
+   subclass: WDL
+   primaryDescriptorPath: /workflows/wf_titan_ont.wdl
+   testParameterFiles:
+    - empty.json
+ - name: Titan_Illumina_PE
+   subclass: WDL
+   primaryDescriptorPath: /workflows/wf_titan_illumina_pe.wdl
+   testParameterFiles:
+    - empty.json
+ - name: Mercury_PE_Prep
+   subclass: WDL
+   primaryDescriptorPath: /workflows/wf_mercury_pe_prep.wdl
+   testParameterFiles:
+    - empty.json
+ - name: Mercury_SE_Prep
+   subclass: WDL
+   primaryDescriptorPath: /workflows/wf_mercury_se_prep.wdl
+   testParameterFiles:
+    - empty.json
+ - name: Mercury_Batch
+   subclass: WDL
+   primaryDescriptorPath: /workflows/wf_mercury_batch.wdl
+   testParameterFiles:
+    - empty.json
+ - name: SC2_nextstrain
+   subclass: WDL
+   primaryDescriptorPath: /workflows/wf_sarscov2_nextstrain_modified.wdl
+   testParameterFiles:
+    - empty.json
+ - name: Titan_Augur_Prep
+   subclass: WDL
+   primaryDescriptorPath: /workflows/wf_titan_augur_prep.wdl
+   testParameterFiles:
+    - empty.json
+ - name: Titan_Augur_Run
+   subclass: WDL
+   primaryDescriptorPath: /workflows/wf_titan_augur_run.wdl
+   testParameterFiles:
+    - empty.json
+
