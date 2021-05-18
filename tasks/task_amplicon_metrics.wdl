@@ -7,7 +7,7 @@ task bedtools_cov {
     File       baifile
     String?    primer_bed = "/artic-ncov2019/primer_schemes/nCoV-2019/V3/nCoV-2019_amplicon.bed"
     String?    fail_threshold = 20
-    String     docker="staphb/ivar:1.2.2_artic20200528"
+    String     docker="staphb/bedtools:2.30.0"
     Int?       cpus = 1
     String?    memory = "2 GB"
   }
@@ -47,7 +47,7 @@ task bedtools_multicov {
     Array[File]  primtrim_bamfiles
     Array[File]  primtrim_baifiles
     String?      primer_bed = "/artic-ncov2019/primer_schemes/nCoV-2019/V3/nCoV-2019_amplicon.bed"
-    String       docker = "staphb/ivar:1.2.2_artic20200528"
+    String       docker = "staphb/bedtools:2.30.0"
     Int?         cpus = 1
     String?      memory = "2 GB"
   }
