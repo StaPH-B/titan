@@ -155,7 +155,7 @@ task nextclade_one_sample {
         File?   qc_config_json
         File?   gene_annotations_json
         File?   pcr_primers_csv
-        String  docker="neherlab/nextclade:latest"
+        String  docker="neherlab/nextclade:0.14.2-alpine3.12"
         Int?    cpus = 2
         String? memory = "3 GB"
     }
