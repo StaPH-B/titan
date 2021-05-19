@@ -6,7 +6,7 @@ import "../tasks/task_consensus_call.wdl" as consensus_call
 import "../tasks/task_assembly_metrics.wdl" as assembly_metrics
 import "../tasks/task_taxonID.wdl" as taxon_ID
 import "../tasks/task_amplicon_metrics.wdl" as amplicon_metrics
-import "../tasks/task_ncbi.wdl" as ncbi
+import "../tasks/task_ncbi_vadr.wdl" as ncbi
 
 
 workflow titan_illumina_pe {
@@ -20,8 +20,6 @@ workflow titan_illumina_pe {
     File    read1_raw
     File    read2_raw
     File    primer_bed
-    String  pangolin_docker_image = "staphb/pangolin:2.3.2-pangolearn-2021-02-21"
-
   }
 
   call read_qc.read_QC_trim {
@@ -65,8 +63,7 @@ workflow titan_illumina_pe {
   call taxon_ID.pangolin2 {
     input:
       samplename = samplename,
-      fasta = consensus.consensus_seq,
-      docker = pangolin_docker_image
+      fasta = consensus.consensus_seq
   }
   call taxon_ID.nextclade_one_sample {
     input:
@@ -93,12 +90,11 @@ workflow titan_illumina_pe {
     Int     fastqc_raw_pairs   = read_QC_trim.fastqc_raw_pairs
     String  fastqc_version     = read_QC_trim.fastqc_version
 
-    Int     seqy_pairs         = read_QC_trim.seqy_pairs
-    Float   seqy_percent       = read_QC_trim.seqy_percent
     Int     fastqc_clean1      = read_QC_trim.fastqc_clean1
     Int     fastqc_clean2      = read_QC_trim.fastqc_clean2
     Int     fastqc_clean_pairs = read_QC_trim.fastqc_clean_pairs
-    String  seqyclean_version  = read_QC_trim.seqyclean_version
+    String  trimmomatic_version  = read_QC_trim.trimmomatic_version
+    String  bbduk_docker         = read_QC_trim.bbduk_docker
 
     Float   kraken_human       = read_QC_trim.kraken_human
     Float   kraken_sc2         = read_QC_trim.kraken_sc2
@@ -109,7 +105,7 @@ workflow titan_illumina_pe {
     File    sorted_bai         = bwa.sorted_bai
     String  bwa_version        = bwa.bwa_version
     String  sam_version        = bwa.sam_version
-    String assembly_method     = "~{bwa.bwa_version}; ~{primer_trim.ivar_version}"
+    String  assembly_method     = "~{bwa.bwa_version}; ~{primer_trim.ivar_version}"
 
     File    trim_sorted_bam            = primer_trim.trim_sorted_bam
     File    trim_sorted_bai            = primer_trim.trim_sorted_bai
@@ -140,7 +136,7 @@ workflow titan_illumina_pe {
     Float   pangolin_aLRT          = pangolin2.pangolin_aLRT
     File    pango_lineage_report   = pangolin2.pango_lineage_report
     String  pangolin_version       = pangolin2.version
-    String  pangolin_docker       = pangolin2.pangolin_docker
+    String  pangolin_docker        = pangolin2.pangolin_docker
 
 
     File    nextclade_json         = nextclade_one_sample.nextclade_json
